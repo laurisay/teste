@@ -1,0 +1,122 @@
+1. Diagramme des classes (UML) pour un serveur web - École 42
+Ce diagramme représente les principales classes d'un projet de serveur web et leurs relations :
+
+Classes principales :
+ServeurWeb
+
+Attributs : adresseIP, port, configuration
+
+Méthodes : démarrer(), arrêter(), écouterRequêtes()
+
+Relation :
+
+1 serveur peut gérer plusieurs requêtes (RequêteHTTP)
+
+1 serveur peut gérer plusieurs utilisateurs (Utilisateur)
+
+RequêteHTTP
+
+Attributs : méthode (GET, POST, etc.), URL, headers, body
+
+Méthodes : analyserRequête(), validerAuthentification()
+
+Relation :
+
+Une requête HTTP est traitée par 1 serveur (ServeurWeb)
+
+Une requête HTTP peut être associée à 1 utilisateur (Utilisateur)
+
+RéponseHTTP
+
+Attributs : statut, headers, body
+
+Méthodes : générerRéponse(), envoyer()
+
+Relation :
+
+Une requête HTTP (RequêteHTTP) produit une réponse (RéponseHTTP)
+
+Utilisateur
+
+Attributs : id, nom, email, motDePasse
+
+Méthodes : authentifier(), obtenirDroitsAccès()
+
+Relation :
+
+1 utilisateur peut envoyer plusieurs requêtes HTTP
+
+GestionnaireDeRoute
+
+Attributs : routes (tableau d’URL associées à des handlers)
+
+Méthodes : ajouterRoute(), trouverHandler()
+
+Relation :
+
+Le serveur utilise un gestionnaire de route pour rediriger les requêtes
+
+BaseDeDonnees
+
+Attributs : connexion, tables
+
+Méthodes : exécuterRequête(), fermerConnexion()
+
+Relation :
+
+Le serveur peut accéder à 1 base de données pour récupérer des informations sur les utilisateurs, les logs, etc.
+
+2. Diagramme des tâches (Processus du serveur web)
+Ce diagramme montre les principales étapes de traitement d'une requête par le serveur web :
+
+Étapes principales :
+Réception de la requête HTTP
+
+Le serveur écoute sur un port (ex : 80, 443)
+
+Un utilisateur envoie une requête (GET, POST, etc.)
+
+Analyse de la requête
+
+Vérification de l’URL demandée
+
+Analyse des headers
+
+Vérification des permissions (si authentification requise)
+
+Routage de la requête
+
+Recherche d’un handler correspondant à l’URL
+
+Appel de la fonction associée
+
+Accès aux ressources
+
+Si la requête concerne une page statique : renvoi du fichier
+
+Si c'est une API : exécution d’une requête en base de données
+
+Génération de la réponse HTTP
+
+Création de l’objet RéponseHTTP
+
+Ajout des headers (type de contenu, statut, etc.)
+
+Envoi de la réponse au client
+
+Transmission via le protocole HTTP
+
+Fin de la connexion si nécessaire
+
+Cardinalités (Relations entre classes)
+1 ServeurWeb peut gérer plusieurs RequêteHTTP (1 → ∞)
+
+1 Utilisateur peut envoyer plusieurs RequêteHTTP (1 → ∞)
+
+1 RequêteHTTP produit une RéponseHTTP (1 → 1)
+
+1 ServeurWeb utilise un GestionnaireDeRoute (1 → 1)
+
+1 GestionnaireDeRoute gère plusieurs routes (1 → ∞)
+
+1 ServeurWeb peut se connecter à 1 BaseDeDonnees (1 → 1)
